@@ -22,5 +22,5 @@ type User struct {
 	//前端鉴权因子,
 	Token    string    `xorm:"varchar(40)" form:"token" json:"token"`    // 什么角色
 	Memo     string    `xorm:"varchar(140)" form:"memo" json:"memo"`     // 什么角色
-	Createat time.Time `xorm:"datetime" form:"createat" json:"createat"` // 什么角色
+	CreateAt time.Time `xorm:"datetime" form:"createat" json:"createat"` // 什么角色
 }

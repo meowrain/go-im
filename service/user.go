@@ -3,6 +3,7 @@ package service
 import (
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
+	"im/conf"
 	"im/model"
 	"im/utils"
 	"math/rand"
@@ -21,18 +22,18 @@ func (userService *UserService) Register(mobile, plainpwd, nickname, avatar, sex
 		Avatar:   avatar,
 		Sex:      sex,
 		Salt:     salt,
-		Createat: time.Now(),
+		CreateAt: time.Now(),
 		Token:    fmt.Sprintf("%08d", rand.Int31n(100000000)),
 	}
 	tmp := &model.User{}
-	_, err := DbEngine.Where("mobile =?", mobile).Get(tmp)
+	_, err := conf.DbEngine.Where("mobile =?", mobile).Get(tmp)
 	if err != nil {
 		return tmp, fmt.Errorf("数据库错误")
 	}
 	if tmp.Id > 0 {
 		return tmp, fmt.Errorf("手机号已注册")
 	} else {
-		_, err = DbEngine.Insert(user)
+		_, err = conf.DbEngine.Insert(user)
 		if err != nil {
 			return user, err
 		}
@@ -42,7 +43,7 @@ func (userService *UserService) Register(mobile, plainpwd, nickname, avatar, sex
 
 func (userService *UserService) Login(mobile, password string) (*model.User, bool, error) {
 	user := &model.User{}
-	_, err := DbEngine.Where("mobile = ?", mobile).Get(user)
+	_, err := conf.DbEngine.Where("mobile = ?", mobile).Get(user)
 	if err != nil {
 		return nil, false, err
 	}
@@ -55,7 +56,7 @@ func (userService *UserService) Login(mobile, password string) (*model.User, boo
 		str := fmt.Sprintf("%d", time.Now().Unix())
 		token := utils.MD5Encode(str)
 		user.Token = token
-		_, err := DbEngine.Cols("token").Update(user)
+		_, err := conf.DbEngine.Cols("token").Update(user)
 		if err != nil {
 			return nil, false, err
 		}
