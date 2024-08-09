@@ -1,10 +1,11 @@
-package model
+package conf
 
 type MysqlConfig struct {
 	Host     string `ini:"host"`
 	Port     string `ini:"port"`
 	UserName string `ini:"username"`
 	Password string `ini:"password"`
+	DBName   string `ini:"dbname"`
 }
 
 type RedisConfig struct {

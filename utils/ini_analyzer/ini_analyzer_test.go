@@ -2,12 +2,12 @@ package ini_analyzer
 
 import (
 	"fmt"
-	"im/model"
+	"im/conf"
 	"testing"
 )
 
 func TestIniAnalyzer(t *testing.T) {
-	conf := &model.Config{}
+	conf := &conf.Config{}
 	err := LoadIni("./conf.ini", conf)
 	fmt.Println(conf)
 	if err != nil {
