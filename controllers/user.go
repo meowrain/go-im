@@ -46,7 +46,7 @@ func RegisterFunc(writer http.ResponseWriter, request *http.Request) {
 	userService := service.UserService{}
 	user, err := userService.Register(mobile, passwd, nickname, "", model.SEX_UNKNOW)
 	if err != nil {
-		utils.Resp(writer, user, 500, err.Error())
+		utils.RespFailed(writer, http.StatusInternalServerError, err.Error())
 		return
 	}
 

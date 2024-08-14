@@ -40,11 +40,11 @@ func main() {
 	// Serve static assets
 	fs := http.FileServer(http.Dir("./asset"))
 	http.Handle("/asset/", http.StripPrefix("/asset", fs))
-	//http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-	//	http.ServeFile(w, r, "./asset/index.html")
-	//})
-
 	http.HandleFunc("/user/register", controllers.RegisterFunc)
+	http.HandleFunc("/contact/loadcommunity", controllers.LoadCommunities)
+	http.HandleFunc("/contact/loadfriend", controllers.LoadFriend)
+	http.HandleFunc("/contact/addcommunity", controllers.JoinCommunity)
+	http.HandleFunc("/contact/addfriend", controllers.AddFriend)
 	RegisterView()
 	http.ListenAndServe(":8080", nil)
 }

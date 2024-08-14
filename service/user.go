@@ -12,6 +12,7 @@ import (
 
 type UserService struct{}
 
+// Register 用户注册
 func (userService *UserService) Register(mobile, plainpwd, nickname, avatar, sex string) (*model.User, error) {
 	salt := fmt.Sprintf("%06d", rand.Int31n(10000))
 	passwd := utils.MakePasswd(plainpwd, salt)
@@ -41,6 +42,7 @@ func (userService *UserService) Register(mobile, plainpwd, nickname, avatar, sex
 	return user, nil
 }
 
+// Login 用户登录函数
 func (userService *UserService) Login(mobile, password string) (*model.User, bool, error) {
 	user := &model.User{}
 	_, err := conf.DbEngine.Where("mobile = ?", mobile).Get(user)
@@ -64,4 +66,11 @@ func (userService *UserService) Login(mobile, password string) (*model.User, boo
 	} else {
 		return nil, false, fmt.Errorf("密码错误")
 	}
+}
+
+// Find 寻找用户
+func (s *UserService) Find(userId int64) model.User {
+	tmp := model.User{}
+	conf.DbEngine.ID(userId).Get(&tmp)
+	return tmp
 }
