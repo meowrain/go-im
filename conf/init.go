@@ -34,7 +34,7 @@ func init() {
 	}
 	logger.Info("数据库连接成功！")
 	//是否显示SQL
-	DbEngine.ShowSQL(true)
+	DbEngine.ShowSQL(false)
 	//设置最大连接数
 	DbEngine.SetMaxOpenConns(20)
 
