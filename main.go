@@ -41,10 +41,12 @@ func main() {
 	fs := http.FileServer(http.Dir("./asset"))
 	http.Handle("/asset/", http.StripPrefix("/asset", fs))
 	http.HandleFunc("/user/register", controllers.RegisterFunc)
+	http.HandleFunc("/user/info", controllers.GetUserInfo)
 	http.HandleFunc("/contact/loadcommunity", controllers.LoadCommunities)
 	http.HandleFunc("/contact/loadfriend", controllers.LoadFriend)
 	http.HandleFunc("/contact/addcommunity", controllers.JoinCommunity)
 	http.HandleFunc("/contact/addfriend", controllers.AddFriend)
+	http.HandleFunc("/chat", controllers.Chat)
 	RegisterView()
 	http.ListenAndServe(":8080", nil)
 }
