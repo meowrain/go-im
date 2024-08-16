@@ -21,9 +21,9 @@ func (service *ContactService) AddFriend(userid, dstid int64) error {
 	}
 	var userExists bool
 	conf.DbEngine.Table("user").Where("id = ?", dstid).Exist(&userExists)
-	if !userExists {
-		return errors.New("添加的用户不存在！！")
-	}
+	//if !userExists {
+	//	return errors.New("添加的用户不存在！！")
+	//}
 	session := conf.DbEngine.NewSession()
 	session.Begin()
 	_, e2 := session.InsertOne(model.Contact{
