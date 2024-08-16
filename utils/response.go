@@ -2,6 +2,7 @@ package utils
 
 import (
 	"encoding/json"
+	"im/utils/meowlog"
 	"net/http"
 )
 
@@ -20,6 +21,7 @@ func Resp(writer http.ResponseWriter, data any, code int, msg string) {
 	writer.WriteHeader(code)
 	writer.Header().Set("Content-Type", "application/json")
 	res, err := json.Marshal(dt)
+	logger := meowlog.NewLogger("console", "error")
 	if err != nil {
 		errorResp := HttpResponse{
 			Code: 500,
@@ -30,6 +32,7 @@ func Resp(writer http.ResponseWriter, data any, code int, msg string) {
 		writer.Write([]byte(errRespBytes))
 		return
 	}
+	logger.Debug("send to client:%v\n", string(res))
 	writer.Write(res)
 }
 
