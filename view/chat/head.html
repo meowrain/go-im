@@ -24,6 +24,7 @@
             sessionStorage.setItem("userinfo",JSON.stringify(o));
         }
     }
+
     var url = location.href;
     var isOpen = url.indexOf("/login")>-1 || url.indexOf("/register")>-1
     if (!userId() && !isOpen){
