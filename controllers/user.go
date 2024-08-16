@@ -2,9 +2,11 @@ package controllers
 
 import (
 	"fmt"
+	"im/conf"
 	"im/model"
 	"im/service"
 	"im/utils"
+	"im/utils/meowlog"
 	"math/rand"
 	"net/http"
 )
@@ -51,4 +53,23 @@ func RegisterFunc(writer http.ResponseWriter, request *http.Request) {
 	}
 
 	utils.Resp(writer, user, 200, "注册成功")
+}
+func GetUserInfo(writer http.ResponseWriter, request *http.Request) {
+
+	err := request.ParseForm()
+	if err != nil {
+		return
+	}
+	userid := request.PostForm.Get("userid")
+	user := model.User{}
+	has, err := conf.DbEngine.Where("id = ?", userid).Get(&user)
+	if err != nil {
+		return
+	}
+	if !has {
+		logger := meowlog.NewLogger("console", "error")
+		logger.Info("用户不存在")
+	}
+	utils.RespOk(writer, user, "success")
+
 }
